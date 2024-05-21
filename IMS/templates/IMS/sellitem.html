@@ -1,0 +1,44 @@
+{% extends 'IMS/base.html' %}
+{% load static %}
+{% block content %}
+
+<h1>Sell Item</h1>
+<div>
+    <form method="post" id="sell_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div id="id_item_price" data-sp="{{list_item.Selling_price}}"></div>
+        <input id="id_sellitem" class="btn btn-primary" type="submit" value="Sell">
+        <p id="message"></p>
+    </form>
+</div>
+
+<script>
+    let quantity = document.getElementById("id_Quantity");
+    let item_price = parseFloat(document.getElementById("id_item_price").getAttribute("data-sp"));
+    let sell_price = document.getElementById("id_Selling_price");
+    sell_price.readOnly = true;
+    quantity.addEventListener("input",(event) => {
+        if(quantity.value>1){
+            sell_price.value = quantity.value*item_price;
+        }
+        else if(quantity.value==1){
+            sell_price.value = item_price;
+        }
+    })
+    let stock = document.getElementById("id_Stock");
+    let sell_btn = document.getElementById("id_sellitem");
+    sell_btn.addEventListener("click",(event) => {
+        event.preventDefault();
+        if(parseInt(stock.value) < parseInt(quantity.value)){
+            message.innerText = "Your Quantity must be less the stock availiblity";
+            return false;
+        }
+        else{
+            let sell_form = document.getElementById("sell_form");
+            sell_form.submit();
+        }
+    })
+
+</script>
+{% endblock %}   

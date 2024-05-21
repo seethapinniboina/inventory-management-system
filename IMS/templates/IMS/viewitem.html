@@ -1,0 +1,51 @@
+{% extends 'IMS/base.html' %}
+{% load static %}
+{% block content %}
+<main>
+  <h1>Item Details</h1>
+<table class="table table-bordered table-striped table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">IIN</th>
+      <th scope="col">Cost</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Quantity_sold</th>
+      <th scope="col">Selling_price</th>
+      <th scope="col">Profit_earned</th>
+      <th scope="col">Revenue</th>    
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+          {% for item in list_item %}
+            <td>{{item.Id}}</td>
+            <td>{{item.Name}}</td>
+            <td>item{{item.Id}}</td>
+            <td>{{item.Cost}}</td>
+            <td>{{item.Quantity}}</td>
+            <td>{{item.Quantity_sold}}</td>
+            <td>{{item.Selling_price}}</td>
+            <td>{{item.Profit_earned}}</td>
+            <td>{{item.Revenue}}</td>
+          {% endfor %}
+      </tr>
+  </tbody>
+</table>
+{% for item in list_item %}
+<a class="btn btn-primary" href="{% url 'IMS:edititem' item.Id %}" role="button">Edit</a>
+<a class="btn btn-primary" href="{% url 'IMS:orderitem' item.Id %}" role="button">Order</a>
+<a class="btn btn-primary" href="{% url 'IMS:order_placed' %}?Id={{item.Id}}" role="button">Order Placed</a>
+<a class="btn btn-primary" href="{% url 'IMS:order_received' %}?Id={{item.Id}}" role="button">Order Received</a>
+<a class="btn btn-primary" href="{% url 'IMS:order_canceled' %}?Id={{item.Id}}" role="button">Order Canceled</a>
+<a class="btn btn-primary" href="{% url 'IMS:itemsold' %}?Id={{item.Id}}" role="button">Transactions</a>
+{% endfor %}
+</main>
+
+
+
+
+{% endblock %}
+
+

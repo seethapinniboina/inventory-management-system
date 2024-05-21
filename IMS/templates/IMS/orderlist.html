@@ -1,0 +1,39 @@
+{% extends 'IMS/base.html' %}
+{% load static %}
+{% block content %}
+
+<main>
+  <h1>Order List</h1>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Item_id</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Cost</th>
+        <th scope="col">Orderdttm</th>
+        <th scope="col">Is_received</th>
+        <th scope="col">Is_cancel</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in list %}
+        <tr>
+            <td>{{i.Id}}</td>
+            <td>{{i.Name}}</td>
+            <td>{{i.Item_id}}</td>
+            <td>{{i.Quantity}}</td>
+            <td>{{i.Cost}}</td>
+            <td>{{i.Orderdttm}}</td>
+            <td>{{i.Is_received}}</td>
+            <td>{{i.Is_cancel}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</main>
+
+
+{% endblock %}
+

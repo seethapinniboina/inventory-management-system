@@ -1,0 +1,32 @@
+{% extends 'IMS/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Order Item</h1>
+<div>
+    <form method="post" id="order_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div id="id_item_price" data-sp="{{list_item.Selling_price}}"></div>
+        <input id="id_orderitem" class="btn btn-primary" type="submit" value="Order">
+        <p id="message"></p>
+    </form>
+</div>
+
+    
+<script>
+    let quantity = document.getElementById("id_Quantity");
+    let cost = document.getElementById("id_Cost");
+    let item_price = parseFloat(document.getElementById("id_item_price").getAttribute("data-sp"));
+    cost.readOnly = true;
+    quantity.addEventListener("input",(event) => {
+        event.preventDefault();
+        if(quantity.value>1){
+            cost.value = quantity.value*item_price;
+        }
+        else if(quantity.value==1){
+            cost.value = item_price;
+        }
+    })
+</script>
+
+{% endblock %}

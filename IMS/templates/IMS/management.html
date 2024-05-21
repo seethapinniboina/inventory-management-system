@@ -1,0 +1,431 @@
+{% load static %}
+{% load seconds_to_hm %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.43.0/apexcharts.min.css" integrity="sha512-nnNXPeQKvNOEUd+TrFbofWwHT0ezcZiFU5E/Lv2+JlZCQwQ/ACM33FxPoQ6ZEFNnERrTho8lF0MCEH9DBZ/wWw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.43.0/apexcharts.min.js" integrity="sha512-vv0F8Er+ByFK3l86WDjP5Zc0h8uxNWPzF+l4wGK0/BlHWxDiFHbYr/91dn8G0OO8tTnN40L4s2Whom+X2NxPog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="{% static 'css/managementstyle.css' %}" >
+</head>
+<body>
+    <header>
+        <nav class="top-nav">
+            <ul>
+                <li><i class="bi bi-list"></i></li>
+                <li>Logo</li>
+                <li class="title">Management Live</li>
+            </ul>
+            <ul>
+                <li><i class="bi bi-house-door-fill"></i>Home</li>
+                <li><i class="bi bi-person-plus-fill"></i>Admissions<i class="bi bi-chevron-down"></i></li>
+                <li class="ab">AB</li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="d-flex">
+            <div class="sidenav">
+                <ul>
+                    <li><i class="bi bi-search"></i></li>
+                    <li><i class="bi bi-funnel-fill"></i></li>
+                    <li><i class="bi bi-calendar2-check"></i></li>
+                    <li><i class="bi bi-truck"></i></li>
+                    <li><i class="bi bi-display"></i></li>
+                    <li><i class="bi bi-clipboard2-pulse-fill"></i></li>
+                    <li><i class="bi bi-capsule"></i></li>
+                    <li><i class="bi bi-house-add-fill"></i></li>
+                    <li><i class="bi bi-bucket-fill"></i></li>
+                    <li><i class="bi bi-activity"></i></li>
+                    <li><i class="bi bi-file-earmark-medical-fill"></i></li>
+                    <li><a href="{% url 'IMS:management' %}"><i class="bi bi-bar-chart-line-fill"></i></a></li>
+                </ul>
+            </div>
+            <div class="main-content">
+                <div class="key-metric-card">
+                    <h1>Key Metrics</h1>
+                </div>
+                <div class="card-left">
+                    <div class="d-flex card1">
+                        <div class="left-content">
+                            <div class="sub-title">Queue to Registration</div>
+                            <div class="card-title">Registration Time</div>
+                        </div>
+                        <div class="right-content">
+                            <span class="i bi bi-clock"></span>
+                            {% seconds_to_hm key_metrics.registration.time as avg_regtm %}
+                            <span class="time">{{avg_regtm}}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex card2">
+                        <div class="left-content">
+                            <div class="sub-title">Registration to Triage</div>
+                            <div class="card-title">Time to Triage</div>
+                        </div>
+                        <div class="right-content">
+                            <span class="i bi bi-clock"></span>
+                            <span class="card2-time">{% seconds_to_hm key_metrics.triage_done.time as triage_done_tm %}{{triage_done_tm}}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex cards">
+                        <div class="left-content">
+                            <div class="sub-title">Triage to Consult</div>
+                            <div class="cards-title">Time to Consult</div>
+                        </div>
+                        <div class="right-content">
+                            <span class="i bi bi-clock"></span>
+                            <span class="card3-time">{% seconds_to_hm key_metrics.cons_done.time as cons_done_tm %}{{cons_done_tm}}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex cards">
+                        <div class="left-content">
+                            <div class="sub-title">Triage End to Discharge</div>
+                            <div class="cards-title">In Zone Time</div>
+                        </div>
+                        <div class="right-content">
+                            <span class="i bi bi-clock"></span>
+                            <span class="card4-time">{% seconds_to_hm key_metrics.in_zone.time as zone_time%}{{zone_time}}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex cards">
+                        <div class="left-content">
+                            <div class="sub-title">Consultation to Discharge</div>
+                            <div class="cards-title">Treatment Time</div>
+                        </div>
+                        <div class="right-content">
+                            <span class="i bi bi-clock"></span>
+                            <span class="card4-time">{% seconds_to_hm key_metrics.treatment.time as avg_treattm %}{{avg_treattm}}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex cards">
+                        <div class="left-content">
+                            <div class="sub-title">Lab Order Request to Processing</div>
+                            <div class="cards-title">Lab Processing Time</div>
+                        </div>
+                        <div class="right-content">
+                            <span class="i bi bi-clock"></span>
+                            <span class="card4-time">02:34</span>
+                        </div>
+                    </div>
+                    <div class="d-flex cards">
+                        <div class="left-content">
+                            <div class="sub-title">Radiology Order Request to Processing</div>
+                            <div class="cards-title">Radiology Processing Time</div>
+                        </div>
+                        <div class="right-content">
+                            <span class="i bi bi-clock"></span>
+                            <span class="card4-time">02:34</span>
+                        </div>
+                    </div>
+                    <div class="d-flex cards">
+                        <div class="last-left-content">
+                            <div class="sub-title">UCC Discharge to IP Bed Allotment</div>
+                            <div class="cards-title">IP Transfers</div>
+                        </div>
+                        <div class="middle-content">
+                            <span><i class="bi bi-person-fill"></i></span>
+                            <span class="num">18</span>
+                        </div>
+                        <div class="right-content">
+                            <span class="i bi bi-clock"></span>
+                            <span class="card3-time">{% seconds_to_hm key_metrics.ip_transfers.completed.time as ipt_complete_time %}{{ipt_complete_time}}</span>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="card-bottom-left">
+                            <div class="card-bottom-title">Total Visits</div>
+                            <div class="card-bottom-count">{{key_metrics.total.count}}</div>
+                        </div>
+                        <div class="break"></div>
+                        <div class="card-bottom-right">
+                            <div class="card-bottom-title">Visit Time</div>
+                            <div class="card-bottom-sub-title">Registration to discharge</div>
+                            <div class="card-bottom-time">{% seconds_to_hm completed.avg_act_tm as avg_visittm %}{{avg_visittm}}</div>
+                        </div>
+                    </div>
+                    <div class="last-cards1">
+                        <div class="d-flex last-cards-card1">
+                            <div class="last-cards-left">
+                                <div class="last-cards1-title"><i class="bi bi-person-fill-add"></i>Insurance</div>
+                                <div class="last-cards1-count">{{completed.Payor.Insurance.count}}</div>
+                            </div>
+                            <div class="d-flex last-cards-right">
+                                <span class="i bi bi-clock clock"></span>
+                                <span class="last-cards-time1">{% seconds_to_hm completed.Payor.Insurance.time as Insurancetime %}{{Insurancetime}}</span>
+                            </div>
+                        </div>
+                        <div class="d-flex last-cards-card2">
+                            <div class="last-cards-left">
+                                <div class="last-cards2-title"><i class="bi bi-credit-card-2-front-fill"></i>Self Pay</div>
+                                <div class="last-cards2-count">{{completed.Payor.Self_Pay.count}}</div>
+                            </div>
+                            <div class="d-flex last-cards-right">
+                                <span class="i bi bi-clock clock"></span>
+                                <span class="last-cards-time2">{% seconds_to_hm completed.Payor.Self_Pay.time as Self_Pay_time %}{{Self_Pay_time}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex last-cards2">
+                        <div class="d-flex last-cards-card3">
+                            <div class="last-cards-left">
+                                <div class="last-cards3-title"><i class="bi bi-globe2"></i>International</div>
+                                <div class="last-cards3-count">{{completed.Residency.International.count}}</div>
+                            </div>
+                            <div class="d-flex last-cards-right">
+                                <span class="i bi bi-clock clock"></span>
+                                <span class="last-cards-time2">{% seconds_to_hm completed.Residency.International.time as Internationaltime %}{{Internationaltime}}</span>
+                            </div>
+                        </div>
+                        <div class="d-flex last-cards-card4">
+                            <div class="last-cards-left">
+                                <div class="last-cards4-title"><i class="bi bi-geo"></i>Local</div>
+                                <div class="last-cards4-count">{{completed.Residency.Local.count}}</div>
+                            </div>
+                            <div class="d-flex last-cards-right">
+                                <span class="i bi bi-clock clock"></span>
+                                <span class="last-cards-time1">{% seconds_to_hm completed.Residency.Local.time as Localtime %}{{Localtime}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="content-part1">
+                    <div class="statistics-content">
+                        <div class="statistics">
+                            <div class="zone-statistics">
+                                <h1 class="zone-statistics-title">Zone Statistics</h1>
+                            </div>
+                            <div class="statistics-cards">
+                                <i class="bi bi-people-fill icons"></i>
+                                <h1 class="statistics-cards-right-title">Total Visits</h1>
+                            </div>
+                            <div class="statistics-cards">
+                                <i class="bi bi-diagram-2 icons"></i>
+                                <h1 class="statistics-cards-right-title">Active</h1>
+                            </div>
+                            <div class="statistics-cards">
+                                <i class="bi bi-suitcase2-fill icons"></i>
+                                <h1 class="statistics-cards-right-title">Discharged</h1>
+                            </div>
+                            <div class="statistics-cards">
+                                <i class="bi bi-clock-fill icons"></i>
+                                <h1 class="statistics-cards-right-title">Average Triage Time</h1>
+                            </div>
+                            <div class="statistics-cards">
+                                <i class="bi bi-stopwatch-fill icons"></i>
+                                <h1 class="statistics-cards-right-title">Average Hold time</h1>
+                            </div>
+                            <div class="statistics-cards">
+                                <i class="bi bi-person-fill-gear icons"></i>
+                                <h1 class="statistics-cards-right-title">Average Visit Time</h1>
+                            </div>
+                        </div>
+                        <div class="green-zone">
+                            <h1 class="green-zone-title">Green Zone</h1>
+                            <p class="green-zone-count">{{zonestats.green.total_visits_count}}</p>
+                            <p class="green-zone-count">{{zonestats.green.active_count}}</p>
+                            <p class="green-zone-count">{{zonestats.green.discharge_count}}</p>
+                            <p class="green-zone-time"><span class="zone-time1"><i class="bi bi-clock zone-clock"></i>{% seconds_to_hm zonestats.green.avg_triage_tm as greenavg_triage %}{{greenavg_triage}}</span></p>
+                            <p class="green-zone-time"><span class="zone-time2"><i class="bi bi-clock zone-clock"></i>{% seconds_to_hm zonestats.green.avg_zone_tm as greenavg_zone %}{{greenavg_zone}}</span></p>
+                            <p class="green-zone-time"><span class="zone-time1"><i class="bi bi-clock zone-clock"></i>{% seconds_to_hm zonestats.green.avg_visit_tm as greenavg_visit %}{{greenavg_visit}}</span></p>
+                        </div>
+                        <div class="yellow-zone">
+                            <h1 class="yellow-zone-title">Yellow Zone</h1>
+                            <p class="yellow-zone-count">{{zonestats.yellow.total_visits_count}}</p>
+                            <p class="yellow-zone-count">{{zonestats.yellow.active_count}}</p>
+                            <p class="yellow-zone-count">{{zonestats.yellow.discharge_count}}</p>
+                            <p class="yellow-zone-time"><span class="zone-time2"><i class="bi bi-clock zone-clock"></i>{% seconds_to_hm zonestats.yellow.avg_triage_tm as yellowavg_triage %}{{yellowavg_triage}}</span></p>
+                            <p class="yellow-zone-time"><span class="zone-time2"><i class="bi bi-clock zone-clock"></i>{% seconds_to_hm zonestats.yellow.avg_zone_tm as yellowavg_zone %}{{yellowavg_zone}}</span></p>
+                            <p class="yellow-zone-time"><span class="zone-time1"><i class="bi bi-clock zone-clock"></i>{% seconds_to_hm zonestats.yellow.avg_visit_tm as yellowavg_visit %}{{yellowavg_visit}}</span></p>
+                        </div>
+                        <div class="red-zone">
+                            <h1 class="red-zone-title">Red Zone</h1>
+                            <p class="red-zone-count">{{zonestats.red.total_visits_count}}</p>
+                            <p class="red-zone-count">{{zonestats.red.active_count}}</p>
+                            <p class="red-zone-count">{{zonestats.red.discharge_count}}</p>
+                            <p class="red-zone-time"><span class="zone-time2"><i class="bi bi-clock zone-clock"></i>{% seconds_to_hm zonestats.red.avg_triage_tm as redavg_triage %}{{redavg_triage}}</span></p>
+                            <p class="red-zone-time"><span class="zone-time1"><i class="bi bi-clock zone-clock"></i>{% seconds_to_hm zonestats.red.avg_zone_tm as redavg_zone %}{{redavg_zone}}</span></p>
+                            <p class="red-zone-time"><span class="zone-time1"><i class="bi bi-clock zone-clock"></i>{% seconds_to_hm zonestats.red.avg_visit_tm as redavg_visit %}{{redavg_visit}}</span></p>
+                        </div>
+                    </div>
+                    <div id="graph1" class="graph">
+                        <h5>Triage by <span class="red-color">Interval</span></h5>
+                    </div>
+                </div>
+                <div class="middle-graph-part">
+                    <div id="graph2" class="graph">
+                        <h5>Triage by <span class="red-color">Zone</span></h5>
+                    </div>
+                    <div id="graph3" class="graph">
+                        <h5>Patients by <span class="red-color">Interval</span></h5>
+                    </div>
+                    <div id="graph4" class="graph">
+                        <h5>Patients by <span class="red-color">Doctor</span></h5>
+                    </div>
+                </div>
+                <div class="bottom-content">
+                    <div class="waiting-status">
+                        <p class="waiting-status-sub-title">Current</p>
+                        <p class="waiting-status-title">Waiting Status</p>
+                        <i class="bi bi-person-wheelchair"></i>
+                    </div>
+                    <div class="bottom-content-cards">
+                        <div class="bottom-content-card1">
+                            <h1 class="bottom-content-card1-title"><i class="bi bi-suitcase-lg-fill"></i><span class="bottom-content-card1-sub-title">For</span>Triage</h1>
+                            <div class="bottom-content-card1-status">
+                                <div>
+                                    <span class="bottom-content-card1-count"><i class="bi bi-person-fill person"></i>{{inprogress.pdTriage.count}}</span>
+                                </div>
+                                <div class="line-break"></div>
+                                <div class="bottom-content-card1-time">
+                                    <span class="i bi bi-clock status-clock"></span>
+                                    <span class="cards-time-status1">{% seconds_to_hm inprogress.pdTriage.time as avg_elapsed_triage %}{{avg_elapsed_triage}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bottom-content-card2">
+                            <h1 class="bottom-content-card2-title"><i class="bi bi-person-circle"></i><span class="bottom-content-card1-sub-title">For</span>Consultation</h1>
+                            <div class="bottom-content-card1-status">
+                                <div>
+                                    <span class="bottom-content-card1-count"><i class="bi bi-person-fill person"></i>{{inprogress.pdConsultation.count}}</span>
+                                </div>
+                                <div class="line-break"></div>
+                                <div class="bottom-content-card1-time">
+                                    <span class="i bi bi-clock status-clock"></span>
+                                    <span class="cards-time-status2">{% seconds_to_hm inprogress.pdConsultation.time as avg_elapsed_cons %}{{avg_elapsed_cons}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="doctor-statistics">
+                        <table id="doctor-table" class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>Doctor</th>
+                                    <th>Patients</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for v in docstats %}
+                                <tr>
+                                    <td class="doctor-name">{{v.doc_name}}</td>
+                                    <td class="patient-count">{{v.count}}</td>
+                                    <td class="doctor-time">{% seconds_to_hm v.avg_visit_tm %}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+       
+    </main>
+    
+<script>
+    let table = new DataTable('#doctor-table',{
+        "bInfo": false,
+        "lengthChange": false,
+        "pageLength": 4,
+    })
+
+    let test = "{{jsonData|escapejs}}"
+    let data = JSON.parse(test).graphs.AccidentEmergency;
+    let colors = {
+        doctor: ['#A26985','#A26985'],
+        triage:['#72c090','#72C090',"#aeaeae","#fcfcfc"],
+        zone: ['#72c090','#72C090'],
+        interval:['#A26985','#A26985']
+
+    }
+    function seconds_to_hm(totalSeconds){
+        let hours = Math.floor(totalSeconds / 3600);
+        totalSeconds %= 3600;
+        let minutes = Math.floor(totalSeconds / 60);
+        minutes = String(minutes).padStart(2, "0");
+        hours = String(hours).padStart(2, "0");
+        return hours+":"+minutes
+    }
+    
+    function graph1(graphData,color,element){
+        console.log(graphData)
+        let xaxis = graphData.x
+        let yaxis = graphData.y
+        var options = {
+            chart: {
+                width: 335,
+                height: 240,            
+            },
+            dataLabels: {
+              enabled: true,
+              enabledOnSeries: [1],
+              formatter: function (val) {
+                return seconds_to_hm(val);
+              }                  
+            },
+            legend: {               
+                markers: {
+                    width: 12,
+                    height: 12,
+                    strokeWidth: 0,
+                    strokeColor: '#fff',
+                    fillColors: color,
+                    radius: 12,                   
+                },
+            },
+            fill: {
+                colors: color,
+            },
+            stroke: {
+              curve: "smooth",
+              width: 2
+            },           
+            series: yaxis,
+            xaxis: {
+                categories: xaxis,
+            },
+            yaxis: [
+            {
+                seriesName: 'moduleName',
+                labels: {
+                    show: false
+                }
+            },
+            {
+                seriesName: 'Avg Time',
+                opposite: true,
+                labels: {
+                    show: false
+                },
+
+            }
+            ],            
+          };
+          
+          var chart = new ApexCharts(document.querySelector(element), options);          
+          chart.render();          
+    }
+
+    graph1(data.Doctor['barline-1'], colors.doctor,"#graph4" );
+    graph1(data.interval['barline-1'], colors.interval,"#graph3" );
+    graph1(data.triage['comparison-1'], colors.triage,'#graph1');
+    graph1(data.Zone['barpie-1'].bar, colors.zone,"#graph2" );
+</script>
+</body>
+</html>

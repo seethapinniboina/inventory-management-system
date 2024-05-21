@@ -1,0 +1,52 @@
+{% extends 'IMS/base.html' %}
+{% load static %}
+{% block content %}
+<main>
+    <h1>Inventory Item List</h1>
+    <a class="btn btn-primary" href="{% url 'IMS:additem' %}" role="button">Add item to Inventory</a>
+    <p></p>
+    <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">IIN</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Quantity_sold</th>
+            <th scope="col">Selling_price</th>
+            <th scope="col">Item_profit</th>
+            <th scope="col">Profit_earned</th>
+            <th scope="col">Revenue</th>
+            <th scope="col">View</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Sell</th>
+            <th scope="col">Order</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in list %}
+            <tr>
+                <td>{{i.Id}}</td>
+                <td>{{i.Name}}</td>
+                <td>item{{i.Id}}</td>
+                <td>{{i.Cost}}</td>
+                <td>{{i.Quantity}}</td>
+                <td>{{i.Quantity_sold}}</td>
+                <td>{{i.Selling_price}}</td>
+                <td>{{i.Item_profit}}</td>
+                <td>{{i.Profit_earned}}</td>
+                <td>{{i.Revenue}}</td>
+                <td><a class="btn btn-primary" href="{% url 'IMS:viewitem' i.Id %}" role="button">Veiw</a></td>
+                <td><a class="btn btn-primary" href="{% url 'IMS:edititem' i.Id %}" role="button">Edit</a></td>
+                <td><a class="btn btn-primary" href="{% url 'IMS:sellitem' i.Id %}" role="button">Sell</a></td>
+                <td><a class="btn btn-primary" href="{% url 'IMS:orderitem' i.Id %}" role="button">Order</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+
+    {% endblock %}
+
+    

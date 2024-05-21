@@ -1,0 +1,130 @@
+{% extends 'IMS/base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Dashboard</h1>
+    <section class="home-page">
+        <div class="top-cards">
+            <div class="card text-white bg-success mb-3">
+                <h2 class="card-header">Total Store Profit</h2>
+                <p class="card-text">Rs.{{list1}}</p>
+            </div>
+            <div class="card text-white bg-warning mb-3">
+                <h2 class="card-header">Total Items in Stock</h2>
+                <p class="card-text">{{list2}}</p>
+            </div>
+        </div>
+        <div class="middle-cards">
+            <div class="card bg-light mb-3">
+                <h2 class="card-header">Item with Highest Cost</h2>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Selling_price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{list3.Id}}</td>
+                            <td>{{list3.Name}}</td>
+                            <td>{{list3.Quantity}}</td>
+                            <td>{{list3.Selling_price}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card text-white bg-secondary mb-3">
+                <h2 class="card-header">Item with Highest Profits</h2>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Selling_price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{list7.Id}}</td>
+                            <td>{{list7.Name}}</td>
+                            <td>{{list7.Quantity}}</td>
+                            <td>{{list7.Selling_price}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card bg-light mb-3">
+                <h2 class="card-header">Item Most Sold</h2>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Selling_price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{list4.Id}}</td>
+                            <td>{{list4.Name}}</td>
+                            <td>{{list4.Quantity}}</td>
+                            <td>{{list4.Selling_price}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="end-cards">
+            <div class="card text-white bg-secondary mb-3">
+                <h2 class="card-header">Items Out of Stock</h2>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Selling_price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in list6 %}
+                            <tr>
+                                <td>{{i.Id}}</td>
+                                <td>{{i.Name}}</td>
+                                <td>{{i.Quantity}}</td>
+                                <td>{{i.Selling_price}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card bg-light mb-3">
+                <h2 class="card-header">Item with Highest Profit Earned</h2>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Selling_price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>{{list5.Id}}</td>
+                                <td>{{list5.Name}}</td>
+                                <td>{{list5.Quantity}}</td>
+                                <td>{{list5.Selling_price}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </section>
+{% endblock %}
+    

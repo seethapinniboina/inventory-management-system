@@ -1,0 +1,38 @@
+{% extends 'IMS/base.html' %}
+{% load static %}
+{% block content %}
+
+<h1>{{form_title}}</h1>
+<div>
+    <form method="post" id="add_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input id="id_additem" class="btn btn-primary" type="submit" value="{{form_action}}">
+        <p id="message1"></p>
+        <p id="message2"></p>
+    </form>
+</div>
+
+<script>
+    let add_btn = document.getElementById("id_additem");
+    add_btn.addEventListener("click",(event) => {
+        event.preventDefault();
+        let sp = document.getElementById("id_Selling_price").value;
+        let cp = document.getElementById("id_Cost").value;
+        let message1 = document.getElementById("message1");
+        let message2 = document.getElementById("message2");
+        if(sp < cp){
+            message1.innerText = "Selling price must be greater than Cost";
+            return false;
+        }
+        else if( (sp - cp)> cp){
+            message2.innerText = "Profit can't be more than Cost price";
+            return false;
+        }
+        else{
+            let add_form = document.getElementById("add_form");
+            add_form.submit();
+        }
+    })
+</script>
+{% endblock %}
